@@ -1,0 +1,41 @@
+# Laviano AI Solutions
+
+> 24/7 AI receptionist for small businesses. Answers every call on the first ring, books appointments into the calendar, captures leads, and transfers urgent callers — on the business's existing phone number.
+
+Laviano AI Solutions (lavianoai.com) builds custom AI receptionists and conversion-focused websites for local operators: HVAC, home services, salons and spas, law offices, vet clinics, auto shops, real estate, medical offices, boutique studios, and restaurants.
+
+## Product
+
+- AI receptionist: first-ring pickup, 24/7, unlimited concurrent calls
+- Calendar booking: Google Calendar, Outlook, Calendly, Jobber, ServiceTitan
+- Lead capture: name, number, intent, full transcript
+- Live transfer by keyword, time of day, or rules you set
+- SMS confirmations on the call
+- Optional small-business website design and on-site AI chat agent
+
+## Pricing
+
+- Frontline: $500/month, 750 minutes included, $0.70/min overage
+- Flagship: $999/month, multi-calendar, custom voice, dedicated support, CRM/API
+- Cancel anytime. Live in about 10–14 days after a 30-minute discovery call.
+
+## Setup
+
+1. Discovery call (30 min) — hours, services, pricing, transfer rules
+2. Custom build — you approve before any real call
+3. Go live — forward the existing number
+
+## Contact
+
+- Book: https://cal.com/lavianoai/discovery-call
+- Email: support@lavianoai.com
+- Live demo: available on https://lavianoai.com/
+
+## Site map
+
+- [Home](https://lavianoai.com/): AI receptionist for small business
+- [What is an AI receptionist](https://lavianoai.com/#ai-receptionist)
+- [Industries](https://lavianoai.com/#industries)
+- [Pricing](https://lavianoai.com/#pricing)
+- [FAQ](https://lavianoai.com/#faq)
+- [Privacy](https://lavianoai.com/privacy.html)

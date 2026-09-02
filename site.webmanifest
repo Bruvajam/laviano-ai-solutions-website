@@ -1,0 +1,19 @@
+{
+  "name": "Laviano AI Solutions",
+  "short_name": "Laviano AI",
+  "description": "24/7 AI receptionist for small business. Answers every call, books appointments, and captures leads.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f7f8fb",
+  "theme_color": "#0f2a5c",
+  "lang": "en-US",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

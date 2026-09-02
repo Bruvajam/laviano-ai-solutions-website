@@ -9,7 +9,8 @@ $mime = @{
   '.css'='text/css; charset=utf-8'; '.js'='application/javascript; charset=utf-8';
   '.svg'='image/svg+xml'; '.png'='image/png'; '.jpg'='image/jpeg'; '.jpeg'='image/jpeg';
   '.gif'='image/gif'; '.ico'='image/x-icon'; '.woff'='font/woff'; '.woff2'='font/woff2';
-  '.json'='application/json'
+  '.json'='application/json'; '.xml'='application/xml'; '.txt'='text/plain; charset=utf-8';
+  '.webmanifest'='application/manifest+json'
 }
 try {
   while ($listener.IsListening) {
@@ -17,7 +18,7 @@ try {
     try {
       $req = $ctx.Request; $res = $ctx.Response
       $rel = [uri]::UnescapeDataString($req.Url.AbsolutePath).TrimStart('/')
-      if ([string]::IsNullOrEmpty($rel)) { $rel = 'Laviano AI Solutions.html' }
+      if ([string]::IsNullOrEmpty($rel)) { $rel = 'index.html' }
       $path = Join-Path $root $rel
       if (Test-Path $path -PathType Container) { $path = Join-Path $path 'index.html' }
       if (-not (Test-Path $path -PathType Leaf)) {
