@@ -11,7 +11,14 @@
   position: fixed; right: 22px; bottom: 22px; z-index: 130;
   display: flex; flex-direction: column; align-items: flex-end; gap: 12px;
   font-family: var(--font-sans);
+  /* The closed panel still occupies layout, so this container is ~600px tall
+     and sits above the nav (z-index 130 vs 90). Without this it swallowed taps
+     on the lower half of the open mobile menu. Children opt back in below. */
+  pointer-events: none;
 }
+.cc__fab { pointer-events: auto; }
+.cc__panel.open { pointer-events: auto; }
+.cc__nudge.show { pointer-events: auto; }
 
 /* ------------------------------------------------------------- launcher */
 /* Matches Retell's launcher: 52px navy pill, 999px radius, 32px circular orb,
