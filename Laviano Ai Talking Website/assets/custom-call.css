@@ -66,9 +66,10 @@
 .cc__nudge.show { opacity: 1; transform: none; pointer-events: auto; }
 .cc__nudge b { font-weight: 600; }
 .cc__nudge button {
-  display: block; margin-top: 8px; padding: 0;
+  display: inline-flex; align-items: center; margin-top: 4px;
+  min-height: 40px; padding: 0 2px;
   background: none; border: 0; cursor: pointer;
-  font-size: 12.5px; color: var(--txt-soft); text-decoration: underline;
+  font-size: 13px; color: var(--txt-soft); text-decoration: underline;
 }
 
 /* ---------------------------------------------------------------- panel */
@@ -97,9 +98,12 @@
 .cc__state { font-size: 12px; color: var(--on-dark-soft); }
 .cc__x {
   margin-left: auto; background: none; border: 0; cursor: pointer;
-  color: var(--on-dark-soft); font-size: 20px; line-height: 1; padding: 4px 6px;
+  color: var(--on-dark-soft); font-size: 20px; line-height: 1;
+  /* full 44px tap target on touch screens, without looking oversized */
+  width: 44px; height: 44px; margin-right: -10px;
+  display: grid; place-items: center; border-radius: 50%;
 }
-.cc__x:hover { color: #fff; }
+.cc__x:hover { color: #fff; background: rgba(255,255,255,.08); }
 
 .cc__body { padding: 30px 22px 24px; text-align: center; }
 

@@ -255,6 +255,12 @@ section[id], #main { scroll-margin-top: 104px; }
   transition: max-height .45s var(--ease), padding .45s var(--ease);
 }
 .nav.open .nav__mobile { max-height: 420px; padding-bottom: 14px; }
+
+/* the glass is too see-through to read a menu against a busy hero */
+.nav.open .nav__shell {
+  background: rgba(255,255,255,.97);
+  box-shadow: rgba(4,16,31,.22) 0px 18px 50px;
+}
 .nav__mobile a {
   padding: 13px 2px;
   font-size: 16px; font-weight: 400; color: var(--txt-mid); text-decoration: none;
@@ -855,6 +861,79 @@ section[id], #main { scroll-margin-top: 104px; }
   .proof, .closer { margin-inline: 12px; }
   .closer { padding-inline: 24px; }
   .toast { left: 12px; right: 12px; bottom: 96px; max-width: none; }
+}
+
+/* ==========================================================================
+   iOS / small-screen refinements
+   The page uses viewport-fit=cover, so anything pinned to an edge has to
+   respect the notch and the home indicator or it sits underneath them.
+   ========================================================================== */
+
+/* kill the grey flash iOS paints over tapped elements */
+html { -webkit-tap-highlight-color: rgba(0,102,255,.12); }
+a, button, .line, [data-talk] { touch-action: manipulation; }
+
+/* iOS needs the prefix or the blur is simply dropped */
+.btn--glass { -webkit-backdrop-filter: blur(10px); }
+.hero__trust { -webkit-backdrop-filter: blur(8px); }
+
+@supports (padding: max(0px)) {
+  .nav {
+    top: max(16px, env(safe-area-inset-top));
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+  }
+  .cc {
+    bottom: max(22px, env(safe-area-inset-bottom));
+    right: max(22px, env(safe-area-inset-right));
+  }
+  .foot__base { padding-bottom: max(34px, env(safe-area-inset-bottom)); }
+}
+
+/* Apple's minimum comfortable tap target is 44px. Footer and legal links
+   were 16–23px, which is a miss on a phone. */
+@media (max-width: 880px) {
+  .foot__links { gap: 2px 22px; }
+  .foot__links a { display: inline-flex; align-items: center; min-height: 44px; }
+  .foot__legal { line-height: 1.9; }
+  .foot__legal a { display: inline-block; padding: 6px 0; }
+  .nav__mobile a { min-height: 48px; display: flex; align-items: center; }
+  .nav__toggle { width: 44px; height: 44px; }
+  .brand { min-height: 44px; }
+}
+
+/* Landscape phones: the hero's vertical padding wastes most of a short screen */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero { padding-top: 110px; padding-bottom: 56px; }
+  .hero__trust { margin-top: 36px; }
+  .hero__scroll { display: none; }
+  .cc__panel { max-height: 82vh; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+}
+
+@media (max-width: 520px) {
+  @supports (padding: max(0px)) {
+    .cc {
+      left: max(12px, env(safe-area-inset-left));
+      right: max(12px, env(safe-area-inset-right));
+      bottom: max(12px, env(safe-area-inset-bottom));
+    }
+  }
+  /* the call panel must never exceed the screen on a small phone */
+  .cc__panel { max-height: 76vh; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .cc__viz { height: 68px; }
+  .cc__body { padding: 24px 18px 20px; }
+  .cc__actions { flex-wrap: wrap; }
+  .cc__btn { flex: 1 1 auto; min-height: 46px; }
+}
+
+/* Below this the brand + CTA + hamburger no longer fit, and .nav__shell's
+   overflow:hidden was clipping the hamburger off the edge — leaving no way to
+   open the menu at all. The floating "Talk to us" launcher already carries
+   that CTA on every screen, so the nav drops it and keeps the menu. */
+@media (max-width: 560px) {
+  .nav__cta .btn--primary { display: none; }
+  .nav__inner { gap: 10px; }
+  .nav__cta { margin-left: auto; }
 }
 
 @media (max-width: 480px) {
