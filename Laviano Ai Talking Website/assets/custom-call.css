@@ -1,0 +1,173 @@
+/* ==========================================================================
+   CUSTOM CALL UI — preview only.
+   What a self-hosted call button would look like in place of Retell's
+   drop-in widget. Styled to the site instead of themed from outside.
+   In production the "Start call" step would hit a serverless function that
+   verifies the reCAPTCHA token server-side and mints the call with the
+   secret API key — which is what makes bot protection actually possible.
+   ========================================================================== */
+
+.cc {
+  position: fixed; right: 22px; bottom: 22px; z-index: 130;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 12px;
+  font-family: var(--font-sans);
+}
+
+/* ------------------------------------------------------------- launcher */
+/* Matches Retell's launcher: 52px navy pill, 999px radius, 32px circular orb,
+   white 16px label. Values sampled from the live widget. */
+.cc__fab {
+  display: inline-flex; align-items: center; gap: 10px;
+  height: 52px; padding: 0 16px 0 12px;
+  border: 0; border-radius: 999px;
+  background: #071a3d;
+  color: #fff; cursor: pointer;
+  font-size: 16px; font-weight: 400; letter-spacing: normal;
+  box-shadow: rgba(0,0,0,.2) 0 2px 8px 0;
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+}
+.cc__fab:hover { transform: translateY(-2px); box-shadow: rgba(0,0,0,.3) 0 6px 18px 0; }
+
+/* the iridescent orb, rebuilt from the sampled colours of Retell's avatar */
+.cc__orb {
+  width: 32px; height: 32px; border-radius: 50%; flex: none;
+  background:
+    radial-gradient(circle at 30% 78%, #c553fe 0%, rgba(197,83,254,0) 54%),
+    radial-gradient(circle at 74% 76%, #fbb488 0%, rgba(251,180,136,0) 50%),
+    radial-gradient(circle at 22% 46%, #e48cc2 0%, rgba(228,140,194,0) 55%),
+    radial-gradient(circle at 62% 20%, #9ec0f5 0%, rgba(158,192,245,0) 60%),
+    radial-gradient(circle at 78% 52%, #a5c7f6 0%, rgba(165,199,246,0) 48%),
+    radial-gradient(circle at 46% 52%, #eec9a6 0%, #e5d2bd 58%, #d9b9f0 100%);
+  box-shadow: inset 0 1px 2px rgba(255,255,255,.55), inset 0 -2px 5px rgba(120,60,160,.18);
+}
+
+/* pulse once with the nudge, then settle — same behaviour as the live site */
+.cc__fab.nudging { animation: cc-nudge 2.2s var(--ease) 3; }
+@keyframes cc-nudge {
+  0%, 55%, 100% { transform: none; }
+  12% { transform: translateY(-6px); }
+  24% { transform: none; }
+  36% { transform: translateY(-3px); }
+}
+@media (prefers-reduced-motion: reduce) { .cc__fab.nudging { animation: none; } }
+
+/* the little nudge bubble */
+.cc__nudge {
+  max-width: 268px;
+  background: #fff; color: var(--txt-dark);
+  border-radius: 18px 18px 4px 18px;
+  padding: 14px 16px;
+  font-size: 14px; line-height: 1.5;
+  box-shadow: var(--shadow-deep);
+  opacity: 0; transform: translateY(8px) scale(.96);
+  transition: opacity .4s var(--ease), transform .4s var(--ease);
+  pointer-events: none;
+}
+.cc__nudge.show { opacity: 1; transform: none; pointer-events: auto; }
+.cc__nudge b { font-weight: 600; }
+.cc__nudge button {
+  display: block; margin-top: 8px; padding: 0;
+  background: none; border: 0; cursor: pointer;
+  font-size: 12.5px; color: var(--txt-soft); text-decoration: underline;
+}
+
+/* ---------------------------------------------------------------- panel */
+.cc__panel {
+  width: min(360px, calc(100vw - 44px));
+  background: linear-gradient(160deg, var(--navy-800) 0%, var(--navy-950) 55%, var(--navy-1000) 100%);
+  border: 1px solid rgba(169,204,255,.16);
+  border-radius: var(--r-xl);
+  box-shadow: 0 30px 80px -24px rgba(4,16,31,.85);
+  overflow: hidden;
+  transform-origin: bottom right;
+  opacity: 0; transform: translateY(10px) scale(.97);
+  transition: opacity .35s var(--ease), transform .35s var(--ease);
+  pointer-events: none;
+}
+.cc__panel.open { opacity: 1; transform: none; pointer-events: auto; }
+
+.cc__head {
+  display: flex; align-items: center; gap: 11px;
+  padding: 16px 18px;
+  border-bottom: 1px solid rgba(169,204,255,.12);
+}
+.cc__mark { width: 32px; height: 32px; border-radius: 9px; flex: none; }
+.cc__who { display: flex; flex-direction: column; line-height: 1.3; }
+.cc__name { font-size: 14.5px; font-weight: 500; color: #fff; }
+.cc__state { font-size: 12px; color: var(--on-dark-soft); }
+.cc__x {
+  margin-left: auto; background: none; border: 0; cursor: pointer;
+  color: var(--on-dark-soft); font-size: 20px; line-height: 1; padding: 4px 6px;
+}
+.cc__x:hover { color: #fff; }
+
+.cc__body { padding: 30px 22px 24px; text-align: center; }
+
+/* the live voice visual */
+.cc__viz {
+  height: 84px; display: flex; align-items: center; justify-content: center; gap: 5px;
+  margin-bottom: 20px;
+}
+.cc__viz span {
+  width: 5px; border-radius: 999px; height: 12%;
+  background: linear-gradient(180deg, var(--blue-200), var(--blue-500));
+  transition: height .25s var(--ease);
+}
+.cc[data-state="live"] .cc__viz span { animation: cc-bar 1.1s var(--ease) infinite alternate; }
+.cc__viz span:nth-child(2n)   { animation-delay: -.35s; animation-duration: .9s; }
+.cc__viz span:nth-child(3n)   { animation-delay: -.7s;  animation-duration: 1.4s; }
+.cc__viz span:nth-child(5n)   { animation-delay: -.2s;  animation-duration: 1.2s; }
+@keyframes cc-bar { from { height: 10%; } to { height: 92%; } }
+@media (prefers-reduced-motion: reduce) { .cc[data-state="live"] .cc__viz span { animation: none; height: 45%; } }
+
+.cc__status { font-size: 15px; color: var(--on-dark-mid); margin: 0 0 4px; min-height: 22px; }
+.cc__timer {
+  font-variant-numeric: tabular-nums; font-size: 13px; color: var(--blue-300);
+  min-height: 18px; margin: 0;
+}
+
+.cc__actions { display: flex; gap: 10px; justify-content: center; margin-top: 22px; }
+.cc__btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  border: 1px solid transparent; border-radius: 999px;
+  padding: 13px 22px; font-size: 14.5px; font-weight: 500; cursor: pointer;
+  transition: all .35s var(--ease);
+}
+.cc__btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.cc__btn--go { background: var(--blue-500); color: #fff; box-shadow: 0 10px 26px -10px rgba(0,102,255,.7); }
+.cc__btn--go:hover { background: #1a76ff; }
+.cc__btn--ghost { background: rgba(255,255,255,.07); color: #fff; border-color: rgba(169,204,255,.25); }
+.cc__btn--ghost:hover { background: rgba(255,255,255,.14); }
+.cc__btn--end { background: #e5484d; color: #fff; }
+.cc__btn--end:hover { background: #f05a5f; }
+
+.cc__foot {
+  padding: 12px 18px 16px; text-align: center;
+  font-size: 11px; color: var(--on-dark-soft);
+  border-top: 1px solid rgba(169,204,255,.1);
+}
+.cc__foot b { color: var(--blue-300); font-weight: 500; }
+
+/* state visibility */
+.cc [data-when] { display: none; }
+.cc[data-state="idle"]    [data-when~="idle"],
+.cc[data-state="asking"]  [data-when~="asking"],
+.cc[data-state="connecting"] [data-when~="connecting"],
+.cc[data-state="live"]    [data-when~="live"],
+.cc[data-state="ended"]   [data-when~="ended"],
+.cc[data-state="error"]   [data-when~="error"] { display: inline-flex; }
+
+.cc__banner {
+  margin: 0 22px 18px; padding: 12px 14px;
+  background: rgba(0,102,255,.12);
+  border: 1px solid rgba(127,178,255,.25);
+  border-radius: 14px;
+  font-size: 12.5px; color: var(--blue-100); text-align: left;
+}
+
+@media (max-width: 520px) {
+  .cc { right: 12px; bottom: 12px; left: 12px; align-items: stretch; }
+  .cc__fab { justify-content: center; }
+  .cc__panel { width: 100%; }
+  .cc__nudge { max-width: none; }
+}

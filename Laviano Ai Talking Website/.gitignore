@@ -1,0 +1,18 @@
+# Secrets — never commit
+.env
+.env.*
+!.env.example
+
+# Build artifacts
+laviano-talking-website.zip
+Laviano AI Talking Website (standalone).html
+
+# Local design previews — not part of the deployed site.
+# netlify.toml publishes this folder as-is, so anything committed here becomes
+# a public URL. index-custom.html in particular is a simulated call UI and must
+# not be reachable by a visitor.
+index-light.html
+index-brand.html
+index-custom.html
+assets/theme-light.css
+assets/theme-brand.css

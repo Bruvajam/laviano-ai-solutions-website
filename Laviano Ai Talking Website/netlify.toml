@@ -1,0 +1,27 @@
+# Static site + one Netlify Function that verifies reCAPTCHA and mints
+# Retell web-call tokens. Deploy this folder as the site root.
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/og-image.png"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+[[redirects]]
+  from = "/api/create-web-call"
+  to = "/.netlify/functions/create-web-call"
+  status = 200
