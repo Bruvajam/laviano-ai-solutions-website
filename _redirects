@@ -1,0 +1,3 @@
+/api/create-web-call  /.netlify/functions/create-web-call  200
+/api/public-config  /.netlify/functions/public-config  200
+/privacy  /privacy.html  200
